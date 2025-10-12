@@ -1,0 +1,43 @@
+[
+  {
+    "id": 1,
+    "name": "Laptop",
+    "price": 65000,
+    "description": "High-performance laptop with 16GB RAM and 512GB SSD",
+    "image": "https://via.placeholder.com/200"
+  },
+  {
+    "id": 2,
+    "name": "Smartphone",
+    "price": 35000,
+    "description": "Latest 5G smartphone with AMOLED display",
+    "image": "https://via.placeholder.com/200"
+  },
+  {
+    "id": 3,
+    "name": "Headphones",
+    "price": 2500,
+    "description": "Wireless headphones with noise cancellation",
+    "image": "https://via.placeholder.com/200"
+  },{
+    "id": 1,
+    "name": "Laptop",
+    "price": 65000,
+    "description": "High-performance laptop with 16GB RAM and 512GB SSD",
+    "image": "https://via.placeholder.com/200"
+  },
+  {
+    "id": 2,
+    "name": "Smartphone",
+    "price": 35000,
+    "description": "Latest 5G smartphone with AMOLED display",
+    "image": "https://via.placeholder.com/200"
+  },
+  {
+    "id": 3,
+    "name": "Headphones",
+    "price": 2500,
+    "description": "Wireless headphones with noise cancellation",
+    "image": "https://via.placeholder.com/200"
+  }
+]
