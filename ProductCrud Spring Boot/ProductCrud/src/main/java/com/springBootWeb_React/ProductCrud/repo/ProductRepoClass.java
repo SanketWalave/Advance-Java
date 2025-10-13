@@ -29,7 +29,16 @@ public class ProductRepoClass {
         });
     }
 
-    public Product deleteById(int id) {
+
+
+    public void saveProduct(Product product) {
+        String sql="insert into product values('0',?,?)";
+        if(jdbcTemplate.update(sql,product.getName(),product.getPrice())>0)
+            System.out.println("saved sucsess");
+        else System.out.println("some problem");
+    }
+
+    public Product getById(int id) {
         String sql="select *from product where id=?";
         return jdbcTemplate.queryForObject(sql,new Object[]{id}, new RowMapper<Product>() {
             @Override
@@ -43,10 +52,15 @@ public class ProductRepoClass {
         });
     }
 
-    public void saveProduct(Product product) {
-        String sql="insert into product values('0',?,?)";
-        if(jdbcTemplate.update(sql,product.getName(),product.getPrice())>0)
-            System.out.println("saved sucsess");
-        else System.out.println("some problem");
+    public void deleteById(int id) {
+        String sql="delete from product where id=?";
+        jdbcTemplate.update(sql,id);
+    }
+
+    public void updateProduct(Product product) {
+        String sql="update product set name=?,price=? where id=?";
+       if( jdbcTemplate.update(sql,product.getName(),product.getPrice(),product.getId())>0){
+           System.out.println("product updated");
+       }
     }
 }

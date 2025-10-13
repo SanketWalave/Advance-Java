@@ -16,11 +16,19 @@ public class ProductService {
         return productRepoClass.getAllProducts();
     }
 
-    public Product deleteById(int id) {
-        return productRepoClass.deleteById(id);
+    public void deleteById(int id) {
+         productRepoClass.deleteById(id);
+    }
+    public Product getById(int id) {
+        return productRepoClass.getById(id);
     }
 
     public void saveProduct(Product product) {
         productRepoClass.saveProduct(product);
+    }
+
+    public void updateProduct( Product product) {
+        System.out.println("in services of update ");
+        productRepoClass.updateProduct(product);
     }
 }

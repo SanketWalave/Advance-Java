@@ -1,77 +1,116 @@
 import React, { useEffect, useState } from "react";
-import ProductServices from "../services/ProductServices"; // Optional: Axios service
+import { useNavigate } from "react-router-dom";
+import { getProducts, deleteById } from "../services/ProductServices";
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
 
-  // Fetch products
   useEffect(() => {
     fetchProducts();
   }, []);
 
+  // Fetch all products
   const fetchProducts = async () => {
     try {
-      // Using fetch
-      const res = await fetch("http://localhost:8001/");
-      if (!res.ok) throw new Error("Network error");
-      const data = await res.json();
-      setProducts(data);
-
-      // OR using Axios
-      // const { data } = await ProductServices.getAllProducts();
-      // setProducts(data);
+      const response = await getProducts();
+      setProducts(response.data);
     } catch (error) {
-      console.error(error);
+      console.error("❌ Error fetching products:", error);
     }
   };
 
-  // Filter products by search term
+  // Delete product
+  const handleDelete = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this product?")) return;
+    try {
+      await deleteById(id);
+      alert("🗑️ Product deleted successfully!");
+      fetchProducts();
+    } catch (error) {
+      console.error("❌ Error deleting product:", error);
+    }
+  };
+
+  // Navigate to update page
+  const handleUpdate = (productId) => {
+    navigate(`/update-product/${productId}`);
+  };
+
+  // Filter products by search
   const filteredProducts = products.filter((product) =>
-    product.name.toLowerCase().includes(search.toLowerCase())
+    product.name?.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
     <div style={styles.container}>
-      <h1 style={styles.title}>💍 Product Collection</h1>
+      <h1 style={styles.title}>💍 Product List</h1>
 
-      {/* Search Input */}
-      <div style={styles.searchContainer}>
-        <input
-          type="text"
-          placeholder="Search products..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          style={styles.searchInput}
-        />
-      </div>
+      {/* Add Product Button */}
+      <button style={styles.addBtn} onClick={() => navigate("/save")}>
+        ➕ Add New Product
+      </button>
 
-      {/* Product Grid */}
-      <div style={styles.grid}>
-        {filteredProducts.length ? (
-          filteredProducts.map((product) => (
-            <div key={product.id} style={styles.card}>
-              <img
-                src={`https://via.placeholder.com/200x150?text=${encodeURIComponent(
-                  product.name
-                )}`}
-                alt={product.name}
-                style={styles.image}
-              />
-              <h2 style={styles.name}>{product.name}</h2>
-              <p style={styles.price}>₹{product.price.toLocaleString()}</p>
-              <button style={styles.button}>🛒 Add to Cart</button>
-            </div>
-          ))
-        ) : (
-          <p style={styles.noProducts}>No products found 😔</p>
-        )}
-      </div>
+      {/* Search Box */}
+      <input
+        type="text"
+        placeholder="Search by name..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        style={styles.search}
+      />
+
+      {/* Product Table */}
+      <table style={styles.table}>
+        <thead>
+          <tr>
+            <th style={styles.th}>ID</th>
+            <th style={styles.th}>Name</th>
+            <th style={styles.th}>Price (₹)</th>
+            <th style={styles.th}>Delete</th>
+            <th style={styles.th}>Edit</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredProducts.length > 0 ? (
+            filteredProducts.map((product) => (
+              <tr key={product.id}>
+                <td style={styles.td}>{product.id}</td>
+                <td style={styles.td}>{product.name}</td>
+                <td style={styles.td}>{product.price}</td>
+                <td style={styles.td}>
+                  <button
+                    style={styles.deleteBtn}
+                    onClick={() => handleDelete(product.id)}
+                  >
+                    Delete
+                  </button>
+                </td>
+                <td style={styles.td}>
+                  <button
+                    style={styles.updateBtn}
+                    onClick={() => handleUpdate(product.id)}
+                  >
+                    Update
+                  </button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="5" style={styles.noData}>
+                No products found 😔
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
     </div>
   );
 };
 
-// Styles
+// Styles remain the same (you can reuse your existing styles)
 const styles = {
   container: {
     padding: "40px",
@@ -79,78 +118,25 @@ const styles = {
     backgroundColor: "#f8f9fa",
     minHeight: "100vh",
   },
-  title: {
-    textAlign: "center",
-    fontSize: "2.5rem",
-    fontWeight: "bold",
-    color: "#333",
-    marginBottom: "20px",
-  },
-  searchContainer: {
-    textAlign: "center",
-    marginBottom: "30px",
-  },
-  searchInput: {
-    padding: "10px 15px",
-    width: "300px",
-    borderRadius: "8px",
-    border: "1px solid #ccc",
-    fontSize: "16px",
-  },
-  grid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
-    gap: "25px",
-  },
-  card: {
-    backgroundColor: "#fff",
-    borderRadius: "15px",
-    boxShadow: "0 4px 15px rgba(0,0,0,0.1)",
-    padding: "20px",
-    textAlign: "center",
-    transition: "transform 0.3s ease, box-shadow 0.3s ease",
-    cursor: "pointer",
-  },
-  image: {
-    width: "100%",
-    height: "160px",
-    objectFit: "cover",
-    borderRadius: "10px",
-    marginBottom: "15px",
-  },
-  name: {
-    fontSize: "1.2rem",
-    fontWeight: "600",
-    color: "#222",
-    margin: "10px 0",
-  },
-  price: {
-    fontSize: "1.1rem",
-    color: "#28a745",
-    marginBottom: "15px",
-  },
-  button: {
-    backgroundColor: "#007bff",
+  title: { textAlign: "center", fontSize: "2rem", color: "#333", marginBottom: "20px" },
+  addBtn: {
+    display: "block",
+    margin: "0 auto 20px auto",
+    backgroundColor: "#17a2b8",
     color: "#fff",
     border: "none",
-    borderRadius: "8px",
-    padding: "10px 15px",
-    fontWeight: "bold",
+    borderRadius: "6px",
+    padding: "10px 20px",
+    fontSize: "16px",
     cursor: "pointer",
-    transition: "background-color 0.3s ease",
   },
-  noProducts: {
-    textAlign: "center",
-    gridColumn: "1 / -1",
-    fontSize: "18px",
-    color: "#555",
-  },
-};
-
-// Hover effect using inline JS
-styles.card["&:hover"] = {
-  transform: "translateY(-5px)",
-  boxShadow: "0 6px 20px rgba(0,0,0,0.15)",
+  search: { display: "block", margin: "0 auto 25px auto", padding: "10px", width: "300px", borderRadius: "6px", border: "1px solid #ccc", fontSize: "16px" },
+  table: { width: "80%", margin: "0 auto", borderCollapse: "collapse", backgroundColor: "#fff", borderRadius: "8px", overflow: "hidden", boxShadow: "0 4px 10px rgba(0,0,0,0.1)" },
+  th: { backgroundColor: "#007bff", color: "#fff", padding: "12px", textAlign: "left", fontSize: "16px" },
+  td: { padding: "10px 15px", fontSize: "15px", borderBottom: "1px solid #ddd", color: "#333" },
+  noData: { textAlign: "center", padding: "15px", color: "#555" },
+  deleteBtn: { backgroundColor: "#dc3545", color: "#fff", border: "none", borderRadius: "4px", padding: "6px 10px", cursor: "pointer" },
+  updateBtn: { backgroundColor: "#28a745", color: "#fff", border: "none", borderRadius: "4px", padding: "6px 10px", cursor: "pointer" },
 };
 
 export default ProductList;
