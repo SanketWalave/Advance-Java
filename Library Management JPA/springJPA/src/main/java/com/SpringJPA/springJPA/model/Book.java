@@ -2,8 +2,11 @@ package com.SpringJPA.springJPA.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -19,6 +22,10 @@ public class Book {
     private String name;
     private String author;
     private double price;
+
+//    @OneToOne
+//            @Cascade(CascadeType.ALL)
+//    Book book;
 
 
 }
