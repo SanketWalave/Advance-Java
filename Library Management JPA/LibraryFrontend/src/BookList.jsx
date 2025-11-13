@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const BookList = () => {
   const [books, setBooks] = useState([]);
@@ -25,38 +26,62 @@ const BookList = () => {
   }, []);
 
   if (loading) {
-    return <div className="text-center mt-8 text-blue-600">Loading books...</div>;
+    return (
+      <div className="text-center mt-5 text-primary">
+        <div className="spinner-border text-primary" role="status"></div>
+        <p>Loading books...</p>
+      </div>
+    );
   }
 
   if (error) {
-    return <div className="text-center mt-8 text-red-500">Error: {error}</div>;
+    return <div className="text-center mt-5 text-danger">Error: {error}</div>;
   }
 
   return (
-    <div className="max-w-5xl mx-auto mt-10 p-4">
-      <h1 className="text-2xl font-bold mb-4 text-center text-gray-800">📚 Book List</h1>
+    <div className="container mt-5">
+      <h2 className="text-center fw-bold mb-4 text-dark">📚 Book List</h2>
+
       {books.length === 0 ? (
-        <p className="text-center text-gray-500">No books available.</p>
+        <p className="text-center text-muted">No books available.</p>
       ) : (
-        <div className="overflow-x-auto shadow-lg rounded-2xl">
-          <table className="min-w-full bg-white border border-gray-200 rounded-lg">
-            <thead className="bg-blue-100">
+        <div className="table-responsive shadow-lg rounded-3">
+          <table className="table table-striped table-hover align-middle text-center">
+            <thead className="table-primary">
               <tr>
-                <th className="px-6 py-3 border-b text-left text-gray-700">ID</th>
-                <th className="px-6 py-3 border-b text-left text-gray-700">Book ID</th>
-                <th className="px-6 py-3 border-b text-left text-gray-700">Name</th>
-                <th className="px-6 py-3 border-b text-left text-gray-700">Author</th>
-                <th className="px-6 py-3 border-b text-left text-gray-700">Price</th>
+                <th scope="col">ID</th>
+                <th scope="col">Book Name</th>
+                <th scope="col">Author</th>
+                <th scope="col">Price</th>
+                <th scope="col">Image</th>
               </tr>
             </thead>
             <tbody>
               {books.map((book) => (
-                <tr key={book.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-3 border-b">{book.id}</td>
-                  <td className="px-6 py-3 border-b">{book.book_id}</td>
-                  <td className="px-6 py-3 border-b">{book.name}</td>
-                  <td className="px-6 py-3 border-b">{book.author}</td>
-                  <td className="px-6 py-3 border-b">₹{book.price}</td>
+                <tr key={book.id}>
+                  <td>{book.id}</td>
+                  <td>{book.name}</td>
+                  <td>{book.author}</td>
+                  <td>₹{book.price}</td>
+                  <td>
+                    {/* <h1>${book.imagePath}</h1> */}
+                    {book.imagePath ? (
+                      <img
+                        src={`http://localhost:8001${book.imagePath}`}
+                        alt={book.name}
+                        style={{
+                          width: "80px",
+                          height: "100px",
+                          objectFit: "cover",
+                          borderRadius: "8px",
+                          border: "1px solid #ccc",
+                          boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
+                        }}
+                      />
+                    ) : (
+                      <span className="text-muted">No image</span>
+                    )}
+                  </td>
                 </tr>
               ))}
             </tbody>

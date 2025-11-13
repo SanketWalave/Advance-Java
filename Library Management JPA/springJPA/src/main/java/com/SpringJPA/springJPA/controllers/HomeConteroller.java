@@ -2,10 +2,16 @@ package com.SpringJPA.springJPA.controllers;
 
 import com.SpringJPA.springJPA.model.Book;
 import com.SpringJPA.springJPA.model.Library;
+import com.SpringJPA.springJPA.model.dto.LibraryDto;
 import com.SpringJPA.springJPA.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.net.http.HttpRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -18,9 +24,16 @@ public class HomeConteroller {
     BookService bookService;
 
     @PostMapping("/saveBook")
-    public void saveBook(@RequestBody Book book){
+    public void saveBook(@RequestPart Book book,@RequestPart MultipartFile multipartFile) throws IOException {
         System.out.println(book);
-        bookService.saveBook(book);
+        bookService.saveBook(book,multipartFile);
+    }
+    @PutMapping("/updateBook/{id}")
+    public ResponseEntity updateBook(@PathVariable int id, @RequestPart Book book, @RequestPart MultipartFile multipartFile) throws IOException {
+        book.setId(id);
+        System.out.println(book);
+        bookService.updateBook(book,multipartFile);
+        return new ResponseEntity("all good", HttpStatus.OK);
     }
 
     @GetMapping("/getBooks")
@@ -34,10 +47,13 @@ public class HomeConteroller {
 //        books.add(new Book(5, "Think and Grow Rich", "Napoleon Hill", 399.99));
 //        return books;
         for(Book b:bookService.getBooks()){
-            System.out.println(b);
+//            System.out.println("\n\n\n\n");
+//            System.out.println(b);
+//            System.out.println("\n\n\n");
         }
         return bookService.getBooks();
     }
+
 
     @GetMapping("/findById/{id}")
     public Optional<Book> findById(@PathVariable int id){
@@ -65,11 +81,21 @@ public class HomeConteroller {
         return bookService.findByAuthor(book.getAuthor());
     }
 
-    @PostMapping("saveBookLibrary")
-    public void saveBookLibrary(@RequestBody Book book, Library library){
-        bookService.saveBookLibrary(book,library);
+    @PostMapping("/saveBookLibrary")
+    public void saveBookLibrary(@RequestPart Book book,@RequestPart Library library ,@RequestPart MultipartFile multipartFile){
+
+        bookService.saveBookLibrary(book,library,multipartFile);
     }
 
 
+    @PostMapping("/saveLibrary")
+    public ResponseEntity saveLibrary(@RequestBody LibraryDto libraryDto){
 
+        if(bookService.saveLibrary(libraryDto)!=null){
+            return new ResponseEntity("library save",HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>("some problem",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
 }

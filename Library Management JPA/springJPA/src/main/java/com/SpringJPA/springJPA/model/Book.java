@@ -1,9 +1,7 @@
 package com.SpringJPA.springJPA.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
@@ -18,14 +16,25 @@ import org.springframework.stereotype.Component;
 @Entity
 public class Book {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String name;
     private String author;
     private double price;
+    private String imagePath;
 
-//    @OneToOne
-//            @Cascade(CascadeType.ALL)
-//    Book book;
+
+    /*
+    {
+        "name":"don",
+        "author":"don",
+        "price":123
+    } */
+
+    @ManyToOne
+    @JoinColumn(name = "library_id")
+//    @JsonBackReference
+    private Library library;
 
 
 }
