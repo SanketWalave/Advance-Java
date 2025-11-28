@@ -257,4 +257,24 @@ public class UserServices {
         return productDtoList;
     }
 
+    public String removeFromCart(int userId, int productId) {
+        // ✅ Find user's cart
+        Optional<Cart> cartOpt = cartRepo.findByUserId(userId);
+        if (cartOpt.isEmpty()) {
+            return "❌ Cart not found for this user!";
+        }
+
+        Cart cart = cartOpt.get();
+
+        // ✅ Find the cart item to remove
+        Optional<CartItems> cartItemOpt = cartItemsRepo.findByCart_CartIdAndProduct_ProductId(cart.getCartId(), productId);
+        if (cartItemOpt.isEmpty()) {
+            return "❌ Product not found in cart!";
+        }
+
+        // ✅ Remove the cart item
+        cartItemsRepo.delete(cartItemOpt.get());
+
+        return "✅ Product removed from cart successfully!";
+    }
 }

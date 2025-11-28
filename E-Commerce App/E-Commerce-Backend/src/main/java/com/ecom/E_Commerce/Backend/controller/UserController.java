@@ -33,16 +33,19 @@ public class UserController {
         else return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 
 //        {
-//            "userName":"sanket",
-//            "userPassword":"1234",
-//            "userEmail":"sanket@gmail.com"
+//            "userEmail":"sanket@gmail.com",
+//            "userPassword":"1234"
+//
 //        }
+
+        //            "userName":"sanket",
 
     }
 
     @Operation(summary = "login user with username and password ")
     @PostMapping("/loginUser")
     public ResponseEntity<UserDto> userLogin(@RequestBody UserDto userDto) {
+        System.out.println("/n/ndon");
         UserDto userDto1 = userServices.loginUser(userDto);
         if (userDto1 != null) return new ResponseEntity<>(userDto1, HttpStatus.OK);
         else return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -55,15 +58,21 @@ public class UserController {
     }
 
     @PostMapping("/addToCart/{id}")
-    public ResponseEntity<String> addToCart(@RequestBody CartDto cartDto,@PathVariable int id){
+    public ResponseEntity<String> addToCart(@RequestBody CartDto cartDto, @PathVariable int id) {
         System.out.println("🛒 Received CartDto: " + cartDto);
         System.out.println("🧍 User ID PathVar: " + id);
-            return new ResponseEntity<>(userServices.addToCart(cartDto,id),HttpStatus.OK);
+        return new ResponseEntity<>(userServices.addToCart(cartDto, id), HttpStatus.OK);
     }
+
     @GetMapping("/getCartByUserId/{id}")
-    public ResponseEntity<List<ProductDto>> getCartByUserId(@PathVariable int id){
+    public ResponseEntity<List<ProductDto>> getCartByUserId(@PathVariable int id) {
         return new ResponseEntity<>(userServices.getCartByUserId(id), HttpStatus.OK);
 
+    }
+
+    @DeleteMapping("/removeFromCart/{userId}/{productId}")
+    public ResponseEntity<String> removeFromCart(@PathVariable int userId, @PathVariable int productId) {
+        return new ResponseEntity<>(userServices.removeFromCart(userId, productId), HttpStatus.OK);
     }
 
 
