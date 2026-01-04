@@ -11,7 +11,7 @@ public class ECommerceBackendApplication {
 	public static void main(String[] args) {
 
         SpringApplication.run(ECommerceBackendApplication.class, args);
-        System.out.println("start\t"+ LocalTime.now());
+        System.out.println("\n\nstart\t"+ LocalTime.now());
 
 	}
 

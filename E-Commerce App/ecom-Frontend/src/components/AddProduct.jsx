@@ -110,7 +110,7 @@ export const AddProduct = () => {
 
         <button
           className="btn btn-outline-primary"
-          onClick={() => navigate("/view-products")}
+          onClick={() => navigate("/admin/view-products")}
         >
           👁️ View Products
         </button>

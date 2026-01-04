@@ -99,7 +99,7 @@ export const ViewProducts = () => {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
 
-        <a href="/add-product" className="btn btn-primary">
+        <a href="/admin/add-product" className="btn btn-primary">
           ➕ Add Product
         </a>
       </div>
