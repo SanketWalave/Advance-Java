@@ -244,11 +244,7 @@ public class ProductService {
 //        product.setImageData(multipartFile.getBytes());
 //        product.setProductAddDate(new Date()); // set date automatically
 //        product.setAvalable(true); // default availability
-//
 //        System.out.println(product);
 //        productRepo.save(product);
 //    }
-
-
-
 }
