@@ -1,9 +1,9 @@
-package com.sec.Security.auth.controller;
+package com.sec.Security.inMemory.auth.controller;
 
-import com.sec.Security.auth.dto.request.CreateUserRequest;
-import com.sec.Security.auth.dto.request.UpdateUserRequest;
-import com.sec.Security.auth.dto.response.UserResponse;
-import com.sec.Security.auth.service.UserService;
+import com.sec.Security.inMemory.auth.dto.request.CreateUserRequest;
+import com.sec.Security.inMemory.auth.dto.request.UpdateUserRequest;
+import com.sec.Security.inMemory.auth.dto.response.UserResponse;
+import com.sec.Security.inMemory.auth.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

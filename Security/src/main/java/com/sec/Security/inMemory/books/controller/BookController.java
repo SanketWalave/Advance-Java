@@ -1,8 +1,8 @@
-package com.sec.Security.books.controller;
+package com.sec.Security.inMemory.books.controller;
 
-import com.sec.Security.books.dto.request.BookRequestDto;
-import com.sec.Security.books.dto.response.BookResponseDto;
-import com.sec.Security.books.service.BookService;
+import com.sec.Security.inMemory.books.dto.request.BookRequestDto;
+import com.sec.Security.inMemory.books.dto.response.BookResponseDto;
+import com.sec.Security.inMemory.books.service.BookService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
