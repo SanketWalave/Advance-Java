@@ -53,7 +53,7 @@ public class AdminService {
             user.setEmail(useDto.email());
             user.setPassword(useDto.password());
             user.setImagePath(imagePath);
-            user.setUserType("Admin");
+            user.setUserType(User.Role.valueOf("ADMIN"));
 
             User saved = userRepository.save(user);
 
@@ -94,7 +94,7 @@ public class AdminService {
     // ⬇ UPDATE ADMIN + DELETE OLD IMAGE
     public UseDto updateAdminProfile(int id, UseDto useDto, MultipartFile multipartFile) {
 
-        User existingUser = userRepository.findById(id).orElse(null);
+        User existingUser = userRepository.findById((long) id).orElse(null);
 
         if (existingUser == null) return null;
 

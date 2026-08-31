@@ -2,12 +2,15 @@ package com.ratingApp.StoreRating.auth.repository;
 
 import com.ratingApp.StoreRating.auth.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
-@Repository
-public interface UserRepository extends JpaRepository<User,Integer> {
+public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findByEmail(String email);
+    boolean existsByEmail(String email);
 
-    List<User> findAllByUserType(String admin);
+    default List<User> findAllByUserType(String admin) {
+        return null;
+    }
 }
