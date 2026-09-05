@@ -23,6 +23,10 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
 
 
+    @GetMapping("/home")
+    public  String home(){
+        return "hello i am home who is there  ";
+    }
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest req) {
@@ -40,6 +44,8 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest req) {
+        System.out.println("\n\n\ni am in side the login api ");
+        System.out.println(req.toString());
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(req.email(), req.password()));
 
