@@ -1,18 +1,22 @@
-import { useState } from 'react'
-import Login from './pages/Login'
-// import heroImg from './assets/hero.png'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from './assets/vite.svg'
-// import './App.css'
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+import Locations from "./pages/Locations";
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <Login></Login>
-    </>
-  )
+    return (
+      <>
+      <h1>hello i am testing hedding </h1>
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Navigate to="/login" replace />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/locations" element={<Locations />} />
+            </Routes>
+        </BrowserRouter>
+      </>
+    );
 }
 
-export default App
+export default App;

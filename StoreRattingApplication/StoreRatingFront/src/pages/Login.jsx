@@ -1,15 +1,16 @@
-
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Added
 import api from "../services/api";
 import "./Login.css";
 
 function Login() {
-
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const [responseData, setResponseData] = useState(null);
     const [error, setError] = useState("");
+
+    const navigate = useNavigate(); // Initialized hook
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -24,15 +25,17 @@ function Login() {
             });
 
             console.log("API Response:", response.data);
-
+            
             // Save JWT
             localStorage.setItem("token", response.data.token);
+           
+            navigate("/dashboard");
+           
 
             // Show API response on screen
             setResponseData(response.data);
 
         } catch (error) {
-
             console.error("Login Error:", error);
 
             setError(
@@ -45,19 +48,15 @@ function Login() {
 
     return (
         <div className="login-container">
-
             <div className="login-card">
-
                 <h2>Welcome Back</h2>
                 <p className="subtitle">
                     Login to your account
                 </p>
 
                 <form onSubmit={handleLogin}>
-
                     <div className="input-group">
                         <label>Email</label>
-
                         <input
                             type="email"
                             placeholder="Enter your email"
@@ -69,7 +68,6 @@ function Login() {
 
                     <div className="input-group">
                         <label>Password</label>
-
                         <input
                             type="password"
                             placeholder="Enter your password"
@@ -82,42 +80,30 @@ function Login() {
                     <button type="submit">
                         Login
                     </button>
-
                 </form>
 
-                {/* API Response */}
                 {responseData && (
                     <div className="response success">
-
                         <h3>API Response</h3>
-
                         <pre>
                             {JSON.stringify(responseData, null, 2)}
                         </pre>
-
                     </div>
                 )}
 
-                {/* API Error */}
                 {error && (
                     <div className="response error">
-
                         <h3>Login Failed</h3>
-
                         <pre>
                             {typeof error === "string"
                                 ? error
                                 : JSON.stringify(error, null, 2)}
                         </pre>
-
                     </div>
                 )}
-
             </div>
-
         </div>
     );
 }
 
 export default Login;
-

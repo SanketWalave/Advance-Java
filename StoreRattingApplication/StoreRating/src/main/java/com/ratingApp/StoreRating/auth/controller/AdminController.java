@@ -14,7 +14,6 @@ public class AdminController {
 
     private final UserRepository userRepository;
 
-
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @GetMapping("/users")
     public List<User> getAllUsers() {
