@@ -1,5 +1,6 @@
 package com.ratingApp.StoreRating.location.model;
 
+import com.ratingApp.StoreRating.store.model.Store;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,4 +24,9 @@ public class Location {
 
     @Column(nullable = false)
     private String country;
+
+    @OneToOne(mappedBy = "location")
+    private Store store;
+
+
 }

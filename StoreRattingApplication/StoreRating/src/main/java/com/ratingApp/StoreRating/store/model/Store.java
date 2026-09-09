@@ -1,6 +1,7 @@
 package com.ratingApp.StoreRating.store.model;
 
 import com.ratingApp.StoreRating.auth.model.User;
+import com.ratingApp.StoreRating.location.model.Location;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -46,4 +47,8 @@ public class Store {
     protected void onCreate() {
         createdAt = LocalDateTime.now();
     }
+
+    @OneToOne
+    @JoinColumn(name = "location_id")
+    private Location location;
 }

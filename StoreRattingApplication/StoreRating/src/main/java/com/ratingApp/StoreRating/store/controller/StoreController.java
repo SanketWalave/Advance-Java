@@ -24,6 +24,12 @@ public class StoreController {
     public ResponseEntity<StoreResponse> createStore(
             @RequestBody StoreRequest req,
             @AuthenticationPrincipal UserPrincipal principal) {
+        System.out.println("\n\n\n");
+        System.out.println("User ID: " + principal.getUser().getId());
+        System.out.println("Email: " + principal.getUser().getEmail());
+        System.out.println("Authorities: " + principal.getAuthorities());
+        System.out.println("\n\n\n");
+//        return null;
         return ResponseEntity.ok(storeService.createStore(req, principal.getUser().getId()));
     }
 
