@@ -6,7 +6,6 @@ import Locations from "./pages/Locations";
 function App() {
     return (
       <>
-      <h1>hello i am testing hedding </h1>
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Navigate to="/login" replace />} />

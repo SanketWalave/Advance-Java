@@ -1,5 +1,6 @@
 package com.ratingApp.StoreRating.store.dto;
 
+import com.ratingApp.StoreRating.location.dto.LocationResponseDto;
 import com.ratingApp.StoreRating.location.model.Location;
 
 import java.math.BigDecimal;
@@ -11,5 +12,5 @@ public record StoreResponse(
         String address,
         BigDecimal averageRating,
         Long ownerId,
-        Location location
+        LocationResponseDto location
 ) {}
