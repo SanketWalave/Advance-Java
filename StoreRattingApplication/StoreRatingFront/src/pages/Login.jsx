@@ -4,6 +4,7 @@ import api from "../services/api";
 import "./Login.css";
 
 function Login() {
+    
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -80,7 +81,17 @@ function Login() {
                     <button type="submit">
                         Login
                     </button>
+                    <p style={{ marginTop: "15px", textAlign: "center", fontSize: "14px" }}>
+                Don't have an account?{" "}
+                <span 
+                    onClick={() => navigate("/register")} 
+                    style={{ color: "#007bff", cursor: "pointer", fontWeight: "bold" }}
+                >
+                    Register here
+                </span>
+                </p>
                 </form>
+    
 
                 {responseData && (
                     <div className="response success">

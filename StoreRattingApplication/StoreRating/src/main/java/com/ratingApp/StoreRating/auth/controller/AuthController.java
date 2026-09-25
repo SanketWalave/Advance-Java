@@ -30,6 +30,11 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest req) {
+//
+//        System.out.println("\n\n\n\n\n");
+//        System.out.println(req.toString());
+//        System.out.println("\n\n\n\n\n");
+//        return  null;
         if (userRepository.existsByEmail(req.email())) {
             return ResponseEntity.badRequest().body("Email already in use");
         }

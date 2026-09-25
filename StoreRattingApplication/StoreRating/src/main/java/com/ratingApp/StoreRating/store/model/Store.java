@@ -48,7 +48,7 @@ public class Store {
         createdAt = LocalDateTime.now();
     }
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "location_id")
     private Location location;
 }

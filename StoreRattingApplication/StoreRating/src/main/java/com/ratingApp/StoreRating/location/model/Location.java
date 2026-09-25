@@ -4,6 +4,8 @@ import com.ratingApp.StoreRating.store.model.Store;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "locations")
 @Getter
@@ -25,8 +27,8 @@ public class Location {
     @Column(nullable = false)
     private String country;
 
-    @OneToOne(mappedBy = "location")
-    private Store store;
+    @OneToMany(mappedBy = "location")
+    private List<Store> stores;
 
 
 }
